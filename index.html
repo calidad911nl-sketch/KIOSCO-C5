@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00205B">
+    <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+    <title>Kiosco Interactivo - Expo Fuerza Civil</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/utils.js"></script>
+</head>
+<body class="kiosk-body">
+    <div class="kiosk-container">
+        <header class="kiosk-header">
+            <img src="assets/logos/logo-c5.png" alt="C5 Nuevo León" class="logo" onerror="this.src=''">
+            <div class="titles">
+                <h1>CENTRO DE COORDINACIÓN INTEGRAL, CONTROL, COMANDO, 
+COMUNICACIONES Y CÓMPUTO DEL ESTADO DE NUEVO LEÓN (C5).
+</h1>
+                <h2>Selecciona tu misión de hoy</h2>
+            </div>
+            <img src="assets/logos/logo-911.png" alt="9-1-1" class="logo" onerror="this.src=''">
+        </header>
+        
+        <main class="games-menu">
+            <a href="memorama.html" class="game-card">
+                <img src="assets/img/icono-memorama.png" class="menu-icon" alt="Memorama" onerror="this.style.display='none'">
+                <h3>Memorama de Héroes</h3>
+                <p>Encuentra los pares y gana la misión</p>
+            </a>
+            
+            <a href="despachador.html" class="game-card">
+                <img src="assets/img/icono-despacho.png" class="menu-icon" alt="Despachador" onerror="this.style.display='none'">
+                <h3>Especialista de Emergencias 9-1-1 Estrella</h3>
+                <p>Envía la ayuda correcta</p>
+            </a>
+            
+            <a href="coloreando.html" class="game-card">
+                <img src="assets/img/icono-colores.png" class="menu-icon" alt="Colorear" onerror="this.style.display='none'">
+                <h3>Coloreando la Vocación</h3>
+                <p>Hora de dar color</p>
+            </a>
+        </main>
+    </div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(console.error));
+}
+</script>
+</body>
+</html>

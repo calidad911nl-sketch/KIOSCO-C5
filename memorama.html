@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00205B">
+    <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+    <title>Memorama - C5 Nuevo León</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/memorama.css">
+    <script src="js/utils.js"></script>
+</head>
+<body>
+    <a href="index.html" class="back-btn"> Volver al C5</a>
+
+    <audio id="bgMusic" src="assets/audio/musica-fondo.mp3" loop></audio>
+    <audio id="sndClick" src="assets/audio/click.mp3"></audio>
+    <audio id="sndMatch" src="assets/audio/acierto.mp3"></audio>
+    <audio id="sndError" src="assets/audio/error.mp3"></audio>
+    <audio id="sndWin" src="assets/audio/victoria.mp3"></audio>
+
+    <!-- PANTALLA 1: Lobby -->
+    <div id="lobby-screen" class="screen active">
+        <div style="display: flex; gap: 30px; margin-bottom: 20px;">
+            <img src="assets/logos/logo-c5.png" alt="C5" style="height:120px;" onerror="this.style.display='none'">
+            <img src="assets/logos/logo-911.png" alt="911" style="height:120px;" onerror="this.style.display='none'">
+        </div>
+        <h1>Misión: Memorama de Héroes</h1>
+        <h2>¿Cuántos elementos entrarán en acción?</h2>
+        <div>
+            <!-- Ahora llaman a la función que pide los nombres -->
+            <button onclick="pedirNombres(1)">1 Jugador</button>
+            <button onclick="pedirNombres(2)">2 Jugadores</button>
+            <button onclick="pedirNombres(3)">3 Jugadores</button>
+            <button onclick="pedirNombres(4)">4 Jugadores</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA 2: Registro de Nombres (¡NUEVO!) -->
+    <div id="names-screen" class="screen hidden">
+        <h1>Identificación de Operadores</h1>
+        <h2>Ingresa los nombres de tu equipo:</h2>
+        
+        <div id="names-inputs-container" class="names-grid">
+            <!-- Los campos de texto se generarán aquí con JavaScript -->
+        </div>
+        
+        <button onclick="iniciarJuegoFinal()" style="background-color: var(--success-green); margin-top: 30px;">
+            Comenzar Misión
+        </button>
+    </div>
+
+    <!-- PANTALLA 3: Tablero -->
+    <div id="game-screen" class="screen hidden">
+        <div class="game-header">
+            <div id="turn-indicator">Turno de: ...</div>
+            <div id="score-board"></div>
+        </div>
+        <div id="game-board" class="board"></div>
+    </div>
+
+    <!-- PANTALLA 4: Victoria -->
+    <div id="victory-screen" class="screen hidden">
+        <div class="diploma">
+            <img src="assets/logos/logo-c5.png" alt="C5" style="height:80px; margin-bottom:10px;" onerror="this.style.display='none'">
+            <h1>¡Misión Cumplida!</h1>
+            <h2>Héroe Honorario de Nuevo León</h2>
+            <p id="winner-text" style="font-size:24px; font-weight:bold;"></p>
+            <p>Gracias por tu excelente desempeño.</p>
+            <button onclick="reiniciarJuego()">Jugar de Nuevo</button>
+        </div>
+    </div>
+
+    <script src="js/memorama.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(console.error));
+}
+</script>
+</body>
+</html>

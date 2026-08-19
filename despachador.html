@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00205B">
+    <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+    <title>Especialista de Emergencias 9-1-1 - C5 Nuevo León</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/despachador.css">
+    <script src="js/utils.js"></script>
+</head>
+<body>
+    <a href="index.html" class="back-btn">Volver al C5</a>
+
+    <div class="game-container">
+        <div class="header">
+            <h1>¡Alerta 9-1-1!</h1>
+            <p>Toca el vehículo correcto para enviar ayuda a la emergencia.</p>
+        </div>
+
+        <div id="emergencia-zona" class="emergency-zone">
+            <h2 id="emergencia-texto">Cargando reporte...</h2>
+            <div id="emergencia-img" class="emergency-img"></div>
+        </div>
+
+        <div class="vehicles-base">
+            <div class="vehicle" onclick="seleccionarVehiculo('policia')">
+                <img src="assets/img/patrulla.png" alt="Fuerza Civil" onerror="this.src=''">
+                <span>Fuerza Civil</span>
+            </div>
+            <div class="vehicle" onclick="seleccionarVehiculo('medico')">
+                <img src="assets/img/cruz_roja.png" alt="Cruz Roja" onerror="this.src=''">
+                <span>Cruz Roja NL</span>
+            </div>
+            <div class="vehicle" onclick="seleccionarVehiculo('bomberos')">
+                <img src="assets/img/bomberos.png" alt="Bomberos" onerror="this.src=''">
+                <span>Bomberos</span>
+            </div>
+            <div class="vehicle" onclick="seleccionarVehiculo('rescate')">
+                <img src="assets/img/proteccion_Civil.png" alt="Protección Civil" onerror="this.src=''">
+                <span>Protección Civil</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de Éxito Intermedia (Entre cada emergencia) -->
+    <div id="success-screen" class="screen hidden" style="position: absolute; top:0; left:0; width: 100%; height: 100vh; background: rgba(227, 232, 237, 0.95); z-index: 200;">
+        <div class="diploma" style="margin-top: 10vh;">
+            <h1>¡Buen trabajo, Especialista de Emergencias 9-1-1!</h1>
+            <h2>La ayuda va en camino</h2>
+            <img src="assets/img/icono-despacho.png" alt="Éxito" style="width: 150px; margin: 20px 0;" onerror="this.style.display='none'">
+            <p>Has tomado la decisión correcta para proteger a Nuevo León.</p>
+            <button onclick="siguienteEmergencia()">Siguiente Reporte</button>
+        </div>
+    </div>
+
+    <!-- Novedad: Pantalla de Diploma Final (Al terminar todas) -->
+    <div id="final-screen" class="screen hidden" style="position: absolute; top:0; left:0; width: 100%; height: 100vh; background: rgba(227, 232, 237, 0.98); z-index: 300;">
+        <div class="diploma" style="margin-top: 10vh; max-width: 600px;">
+            <h1>¡Misión Cumplida!</h1>
+            <h2 style="color: var(--emergency-red); font-size: 26px; margin: 20px 0;">Felicidades, eres un Especialista de Emergencias 9-1-1 Honorario</h2>
+            <img src="assets/img/icono-despacho.png" alt="Éxito" style="width: 180px; margin: 10px 0;" onerror="this.style.display='none'">
+            <p style="margin-bottom: 30px;">¡Gracias por tu gran vocación de servir!</p>
+            <button onclick="reiniciarJuego()" style="margin-right: 15px;">Jugar de Nuevo</button>
+            <a href="index.html" style="text-decoration:none;"><button style="background: var(--emergency-red);">Volver al Menú</button></a>
+        </div>
+    </div>
+
+    <audio id="sndClick" src="assets/audio/click.mp3"></audio>
+    <audio id="sndMatch" src="assets/audio/acierto.mp3"></audio>
+    <audio id="sndError" src="assets/audio/error.mp3"></audio>
+
+    <script src="js/despachador.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(console.error));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00205B">
+    <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+    <title>Coloreando - C5 Nuevo León</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dibujo.css">
+    <script src="js/utils.js"></script>
+</head>
+<body>
+    <a href="index.html" class="back-btn">⬅ Volver al C5</a>
+
+    <div class="drawing-layout">
+        <!-- Panel de Herramientas Lateral -->
+        <div class="tools-panel">
+            <h3>Colores</h3>
+            <div class="color-palette">
+                <div class="color-btn active" style="background: #D32F2F;" data-color="#D32F2F"></div>
+                <div class="color-btn" style="background: #1976D2;" data-color="#1976D2"></div>
+                <div class="color-btn" style="background: #00205B;" data-color="#00205B"></div>
+                <div class="color-btn" style="background: #03A9F4;" data-color="#03A9F4"></div>
+                <div class="color-btn" style="background: #4CAF50;" data-color="#4CAF50"></div>
+                <div class="color-btn" style="background: #FFEB3B;" data-color="#FFEB3B"></div>
+                <div class="color-btn" style="background: #FF9800;" data-color="#FF9800"></div>
+                <div class="color-btn" style="background: #E91E63;" data-color="#E91E63"></div>
+                <div class="color-btn" style="background: #9C27B0;" data-color="#9C27B0"></div>
+                <div class="color-btn" style="background: #5D4037;" data-color="#5D4037"></div>
+                <div class="color-btn" style="background: #8D6E63;" data-color="#8D6E63"></div>
+                <div class="color-btn" style="background: #FFCCBC;" data-color="#FFCCBC"></div>
+                <div class="color-btn" style="background: #F5F5DC;" data-color="#F5F5DC"></div>
+                <div class="color-btn" style="background: #9E9E9E;" data-color="#9E9E9E"></div>
+                <div class="color-btn" style="background: #000000;" data-color="#000000"></div>
+                <!-- Borrador (Pinta de blanco) -->
+                <div class="color-btn" style="background: #FFFFFF; border: 2px solid #ccc;" data-color="#FFFFFF" id="btn-borrador"></div>
+            </div>
+
+            <h3>Misión</h3>
+            <div class="drawing-selector">
+                <button onclick="cambiarDibujo(-1)" class="carousel-btn">◀</button>
+                <span id="drawing-name">Fuerza Civil</span>
+                <button onclick="cambiarDibujo(1)" class="carousel-btn">▶</button>
+            </div>
+
+            <div class="action-buttons" style="display: flex; flex-direction: column; gap: 10px; margin-top: auto;">
+                <button onclick="deshacerPaso()" style="background: #FF9800; padding: 12px; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px;">↩️ Deshacer</button>
+                <button onclick="limpiarLienzo()" style="background: #757575; padding: 12px; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px;">🗑️ Borrar Todo</button>
+                <button onclick="finalizarDibujo()" style="background: #2E7D32; padding: 12px; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px;">📸 Terminar</button>
+            </div>
+        </div>
+
+        <!-- Área de Dibujo -->
+        <div class="canvas-wrapper" id="canvas-container">
+            <canvas id="lienzo" width="800" height="600"></canvas>
+            <img src="assets/img/dibujo-policia.png" id="mandala-overlay" alt="Dibujo" draggable="false" style="display: none;">
+        </div>
+    </div>
+
+    <!-- Pantalla de Éxito -->
+    <div id="success-screen" class="screen hidden" style="position: absolute; top:0; left:0; width: 100%; background: var(--bg-color); z-index: 200; height: 100vh; overflow-y: auto;">
+        <div class="diploma" style="margin: 40px auto;">
+            <h1>¡Obra de Arte Completada!</h1>
+            <h2>Héroe Creativo del C5</h2>
+            <p>Pide a tus papás que tomen una foto de tu dibujo.</p>
+            <div id="final-artwork"></div>
+            <br>
+            <button onclick="reiniciarDibujo()">Nuevo Dibujo</button>
+            <a href="index.html" style="text-decoration:none;"><button style="background: var(--emergency-red);">Volver al Menú</button></a>
+        </div>
+    </div>
+
+    <audio id="sndClick" src="assets/audio/click.mp3"></audio>
+    <!-- NUEVO: Etiqueta de música de fondo (se asume que guardarás el archivo mp3 con este nombre) -->
+    <audio id="bgMusic" src="assets/audio/musica-coloreando.mp3" loop></audio>
+
+    <script src="js/coloreando.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(console.error));
+}
+</script>
+</body>
+</html>
