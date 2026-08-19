@@ -1,0 +1,136 @@
+:root {
+    --c5-blue: #00205B;
+    --c5-light-blue: #004A99;
+    --emergency-red: #D32F2F;
+    --success-green: #388E3C;
+    --white: #FFFFFF;
+    --bg-color: #E3E8ED;
+    --text-dark: #333333;
+    /* Alto de pantalla real, corregido por js/utils.js para Safari de iPad/iOS.
+       Mientras utils.js no haya corrido, 1vh sirve de respaldo. */
+    --vh: 1vh;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none; 
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    /* Evita el "flash" gris al tocar botones/tarjetas en iPad y Android */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Evita que se pueda arrastrar una imagen o el canvas como si fuera un archivo
+   (común al usar el dedo sobre imágenes en iPad) */
+img, canvas {
+    -webkit-user-drag: none;
+    user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+
+html, body {
+    /* Quita el "rebote" de Safari al arrastrar el dedo fuera del contenido */
+    overscroll-behavior: none;
+}
+
+body {
+    margin: 0; padding: 0;
+    background-color: var(--bg-color);
+    color: var(--c5-blue);
+    overflow: hidden; 
+}
+
+/* Kiosco Principal */
+.kiosk-body {
+    background-image: radial-gradient(circle at center, var(--bg-color) 0%, #cfd8dc 100%);
+    display: flex; justify-content: center; align-items: center;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+}
+.kiosk-container { width: 90%; max-width: 1200px; display: flex; flex-direction: column; gap: 50px; }
+.kiosk-header {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--white); padding: 20px 50px; border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-bottom: 8px solid var(--c5-blue);
+}
+.logo { height: 100px; object-fit: contain; }
+.titles { text-align: center; }
+.titles h1 { margin: 0; font-size: 42px; color: var(--c5-blue); text-transform: uppercase; }
+.titles h2 { margin: 10px 0 0 0; font-size: 24px; color: var(--text-dark); font-weight: normal; }
+.games-menu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+
+/* Tarjetas de Juegos */
+.game-card {
+    background: var(--white); border-radius: 25px; padding: 30px;
+    text-align: center; text-decoration: none; color: inherit;
+    box-shadow: 0 15px 0 #B0BEC5; transition: transform 0.1s, box-shadow 0.1s;
+    display: flex; flex-direction: column; align-items: center;
+    touch-action: manipulation; /* evita el retraso de 300ms al tocar en algunas pantallas táctiles */
+}
+.game-card:active { transform: translateY(15px); box-shadow: 0 0 0 #B0BEC5; }
+
+/* ==============================================
+   NUEVA CLASE PARA LAS IMÁGENES DEL MENÚ
+   (Reemplaza al antiguo círculo de color)
+   ============================================== */
+.menu-icon {
+    width: 180px;  /* Tamaño amplio para destacar */
+    height: 180px; 
+    object-fit: contain; /* Mantiene la proporción exacta de la imagen */
+    margin-bottom: 20px; 
+    display: block;
+}
+
+.game-card h3 { font-size: 28px; margin: 0 0 10px 0; color: var(--c5-blue); }
+.game-card p { font-size: 18px; margin: 0; color: #666; }
+
+/* Clases Compartidas (Botones y Pantallas) */
+.screen {
+    display: none;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+    flex-direction: column; align-items: center; justify-content: center;
+}
+.screen.active { display: flex; }
+.hidden { display: none !important; }
+
+button {
+    background-color: var(--c5-light-blue); color: var(--white);
+    border: none; border-radius: 15px; padding: 20px 40px; 
+    font-size: 24px; font-weight: bold; margin: 10px; cursor: pointer;
+    box-shadow: 0 8px 0 var(--c5-blue); transition: transform 0.1s, box-shadow 0.1s;
+    touch-action: manipulation;
+}
+button:active { transform: translateY(8px); box-shadow: 0 0 0 var(--c5-blue); }
+
+.back-btn {
+    position: absolute; top: 20px; left: 20px;
+    background: var(--emergency-red); color: white; text-decoration: none;
+    padding: 15px 25px; border-radius: 10px; font-weight: bold; font-size: 18px;
+    box-shadow: 0 5px 0 #9A0007; z-index: 100; transition: transform 0.1s, box-shadow 0.1s;
+    touch-action: manipulation;
+}
+.back-btn:active { transform: translateY(5px); box-shadow: 0 0 0 #9A0007; }
+
+/* Diploma Final */
+.diploma {
+    background: var(--white); padding: 50px; border-radius: 20px;
+    text-align: center; border: 10px solid var(--c5-blue);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+/* iPad / modo kiosco */
+html, body { width: 100%; height: 100%; }
+body { touch-action: manipulation; }
+a, button, .vehicle, .color-btn, .game-card { -webkit-tap-highlight-color: transparent; }
+@media (orientation: portrait) and (max-width: 1024px) {
+  .kiosk-container { width: 94%; gap: 20px; }
+  .kiosk-header { padding: 15px 20px; }
+  .logo { height: 65px; }
+  .titles h1 { font-size: 20px; }
+  .games-menu { grid-template-columns: 1fr; gap: 15px; }
+  .game-card { padding: 18px; }
+  .menu-icon { width: 90px; height: 90px; margin-bottom: 8px; }
+}

@@ -1,0 +1,125 @@
+/* =========================================
+   CONTENEDOR PRINCIPAL - Centrado absoluto
+   ========================================= */
+.game-container { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+    width: 100%; 
+    padding: 20px 12px 30px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.header { 
+    text-align: center; 
+    margin-bottom: 20px; 
+    width: 100%;
+}
+
+.header h1 { 
+    font-size: 3.5rem; 
+    margin-bottom: 10px; 
+    color: var(--c5-blue); 
+}
+
+.header p { 
+    font-size: 1.5rem; 
+}
+
+/* =========================================
+   ZONA DEL REPORTE - Ampliada y centrada
+   ========================================= */
+.emergency-zone {
+    background: white; 
+    border: 5px dashed var(--emergency-red); 
+    border-radius: 20px; 
+    padding: 30px;
+    width: 90%; 
+    max-width: 900px; 
+    text-align: center; 
+    /* El 'auto' a los lados fuerza el centrado horizontal */
+    margin: 0 auto 40px auto; 
+    transition: transform 0.2s;
+    box-sizing: border-box;
+}
+
+.emergency-zone.error { 
+    border-color: red; 
+    animation: shake 0.5s; 
+}
+
+.emergency-zone h2 {
+    font-size: 2.2rem; 
+    margin-bottom: 15px;
+    color: var(--c5-blue);
+}
+
+.emergency-img {
+    height: clamp(200px, 32vh, 350px); 
+    width: 100%; 
+    background-color: #EEE; 
+    border-radius: 15px; 
+    margin: 0 auto;
+    background-size: contain; 
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+
+/* =========================================
+   BOTONES DE VEHÍCULOS - Proporcionados
+   ========================================= */
+.vehicles-base { 
+    display: flex; 
+    gap: 30px; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    width: 100%;
+}
+
+.vehicle {
+    background: white; 
+    border-radius: 20px; 
+    padding: 20px; 
+    text-align: center;
+    cursor: pointer; 
+    width: 220px;
+    max-width: 42vw;
+    box-shadow: 0 10px 0 #B0BEC5; 
+    transition: transform 0.1s, box-shadow 0.1s;
+    touch-action: manipulation;
+}
+
+.vehicle:active { 
+    transform: translateY(10px); 
+    box-shadow: 0 0 0 #B0BEC5; 
+}
+
+.vehicle img { 
+    width: 140px; 
+    height: 140px; 
+    object-fit: contain; 
+    margin-bottom: 15px; 
+}
+
+.vehicle span { 
+    display: block; 
+    font-weight: bold; 
+    color: var(--c5-blue); 
+    font-size: 1.5rem; 
+}
+
+/* =========================================
+   ANIMACIONES
+   ========================================= */
+@keyframes shake {
+    0% { transform: translateX(0); } 
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); } 
+    75% { transform: translateX(-10px); } 
+    100% { transform: translateX(0); }
+}

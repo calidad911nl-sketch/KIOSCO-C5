@@ -1,0 +1,171 @@
+/* ========================================================= */
+/* ENCABEZADOS Y MARCADOR */
+/* ========================================================= */
+.game-header { 
+    width: 90%; 
+    display: flex; 
+    justify-content: space-between; 
+    font-size: 24px; 
+    font-weight: bold; 
+    margin-bottom: 20px; 
+}
+
+#turn-indicator { 
+    padding: 10px 20px; 
+    background: var(--emergency-red); 
+    color: white; 
+    border-radius: 10px; 
+}
+
+#score-board { 
+    padding: 10px 20px; 
+    background: var(--white); 
+    border-radius: 10px; 
+    color: var(--c5-blue); 
+}
+
+/* ========================================================= */
+/* PANTALLA DE CAPTURA DE NOMBRES */
+/* ========================================================= */
+.names-grid { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+    margin-top: 20px; 
+    width: 100%; 
+    max-width: 400px; 
+}
+
+.name-input-group { 
+    display: flex; 
+    flex-direction: column; 
+    text-align: left; 
+    font-weight: bold; 
+    font-size: 20px; 
+}
+
+.name-input-group input {
+    padding: 15px; 
+    font-size: 22px; 
+    border-radius: 10px; 
+    border: 3px solid var(--c5-blue);
+    text-align: center; 
+    margin-top: 5px; 
+    outline: none;
+}
+
+.name-input-group input:focus { 
+    border-color: var(--success-green); 
+}
+
+/* ========================================================= */
+/* TABLERO Y CARTAS RESPONSIVAS */
+/* ========================================================= */
+
+/* La pantalla del tablero puede tener scroll vertical si el
+   tablero no cabe completo (por ejemplo iPad en modo retrato
+   con 4 jugadores / 30 cartas), en vez de recortarse sin forma
+   de verlo completo. */
+#game-screen {
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 0 30px;
+}
+
+/* Contenedor central del tablero responsivo */
+.board {
+    display: grid; 
+    gap: 15px; 
+    margin: 0 auto; 
+    justify-content: center; 
+    align-items: center; 
+    width: 95vw; 
+}
+
+/* Estructura base de la carta Auto-ajustable */
+.card {
+    width: 100%; 
+    aspect-ratio: 1 / 1; 
+    height: auto;
+    background-color: var(--c5-blue); 
+    border-radius: 10px; 
+    cursor: pointer;
+    background-image: url('../assets/logos/logo-c5.png'); 
+    background-size: 60%; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    transition: transform 0.3s, box-shadow 0.3s; 
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    overflow: hidden; 
+    position: relative;
+    z-index: 1;
+    touch-action: manipulation;
+}
+
+/* EFECTO 1: LA CARTA "SALTA" AL PASAR EL CURSOR
+   Solo se activa con mouse real (pointer:fine + hover:hover).
+   En iPad/pantallas táctiles, :hover se queda "pegado" tras tocar
+   una carta hasta tocar otra parte, así que ahí lo desactivamos. */
+@media (hover: hover) and (pointer: fine) {
+    .card:hover {
+        transform: scale(1.05);
+        z-index: 10;
+        box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+    }
+}
+
+/* Carta volteada */
+.card.flipped { 
+    background-color: var(--white); 
+    background-image: none; 
+    border: 3px solid var(--c5-blue); 
+    padding: 0;
+    cursor: default; 
+}
+
+/* Ajuste de la imagen interna */
+.card img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: none; 
+    border-radius: 6px; 
+    transition: transform 0.4s ease; 
+}
+
+.card.flipped img { 
+    display: block; 
+}
+
+/* EFECTO 2: ZOOM A LA FOTOGRAFÍA AL PASAR EL CURSOR (solo con mouse real) */
+@media (hover: hover) and (pointer: fine) {
+    .card.flipped:hover img {
+        transform: scale(1.2);
+    }
+}
+
+/* ========================================================= */
+/* CLASES DINÁMICAS (Basadas en altura de pantalla) */
+/* ========================================================= */
+
+/* 1 Jugador: 16 cartas (Grid de 4x4) */
+.board.grid-16 { grid-template-columns: repeat(4, 1fr); max-width: calc(var(--vh, 1vh) * 60); }
+
+/* 2 Jugadores: 20 cartas (Grid de 5x4) */
+.board.grid-20 { grid-template-columns: repeat(5, 1fr); max-width: calc(var(--vh, 1vh) * 75); }
+
+/* 3 Jugadores: 24 cartas (Grid de 6x4) */
+.board.grid-24 { grid-template-columns: repeat(6, 1fr); max-width: calc(var(--vh, 1vh) * 90); }
+
+/* 4 Jugadores: 30 cartas (Grid de 6x5) */
+.board.grid-30 { grid-template-columns: repeat(6, 1fr); max-width: calc(var(--vh, 1vh) * 90); gap: 10px; }
+
+/* iPad y pantallas más chicas o en modo retrato: cartas y espacios
+   un poco más compactos para que quepan más filas sin verse enormes */
+@media (max-width: 900px) {
+    .board { gap: 10px; }
+    .board.grid-30 { gap: 8px; }
+    .game-header { font-size: 18px; }
+}
+

@@ -1,0 +1,115 @@
+.drawing-layout {
+    display: flex;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+    padding: 80px 20px 20px 20px;
+    gap: 20px;
+    box-sizing: border-box;
+}
+.tools-panel {
+    width: 280px; 
+    background: white; 
+    border-radius: 20px; 
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+    display: flex; 
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.action-buttons { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    margin-top: auto; 
+}
+.tools-panel h3 { margin: 10px 0; color: var(--c5-blue); text-align: center; }
+
+/* Paleta de colores expandida a 4 columnas */
+.color-palette { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+.color-btn { width: 100%; height: 40px; border-radius: 20px; cursor: pointer; border: 3px solid transparent; transition: transform 0.2s; touch-action: manipulation; }
+.color-btn.active { border-color: #000; transform: scale(1.15); box-shadow: 0 0 10px rgba(0,0,0,0.3); }
+
+#btn-borrador { background-image: url('../assets/img/icono-borrador.png'); background-size: 50%; background-position: center; background-repeat: no-repeat; }
+
+/* Selector de Dibujos (Carrusel) */
+.drawing-selector { 
+    display: flex; justify-content: space-between; align-items: center; 
+    background: var(--bg-color); border-radius: 15px; padding: 5px; margin-bottom: 20px;
+}
+.carousel-btn {
+    background: var(--c5-blue); color: white; border: none; border-radius: 10px;
+    padding: 10px 15px; font-size: 18px; cursor: pointer; margin: 0; box-shadow: 0 4px 0 #001233;
+    touch-action: manipulation;
+}
+.carousel-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #001233; }
+#drawing-name { font-weight: bold; color: var(--c5-blue); text-align: center; flex-grow: 1; font-size: 14px; }
+
+input[type="range"] { width: 100%; margin-bottom: 20px; }
+.btn-clear { background-color: #757575; padding: 15px; }
+.btn-save { background-color: var(--success-green); padding: 15px; }
+
+.canvas-wrapper {
+    flex-grow: 1; position: relative; background: white; border-radius: 20px;
+    overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); touch-action: none;
+}
+#lienzo { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+#mandala-overlay { 
+    position: absolute; top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    object-fit: contain; z-index: 2; pointer-events: none; 
+    
+    /* ¡AQUÍ ESTÁ LA MAGIA! Hace el fondo blanco invisible */
+    mix-blend-mode: multiply; 
+}
+
+/* El nuevo sistema anti-errores para mostrar la imagen final */
+/* El contenedor final optimizado para verse grande y centrado */
+.final-composition canvas { 
+    width: 100%; 
+    height: 100%; 
+    display: block; 
+    object-fit: cover; /* Llena todo el cuadro recortando los sobrantes laterales sin deformar */
+}
+
+.final-composition img { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; /* Mantiene la proporción perfecta del dibujo original */
+    pointer-events: none; 
+    mix-blend-mode: multiply; 
+}
+
+/* =========================================================
+   IPAD EN MODO RETRATO Y PANTALLAS ANGOSTAS
+   El panel de 280px fijo ya no cabe cómodo junto al lienzo,
+   así que se apila arriba (con scroll propio) y el lienzo
+   queda abajo con espacio de sobra para dibujar con el dedo.
+   ========================================================= */
+@media (max-width: 900px) {
+    .drawing-layout {
+        flex-direction: column;
+        padding: 76px 12px 12px;
+        height: auto;
+        min-height: 100vh;
+        min-height: calc(var(--vh, 1vh) * 100);
+    }
+    .tools-panel {
+        width: 100%;
+        height: auto;
+        max-height: 40vh;
+        flex-shrink: 0;
+    }
+    .color-palette { grid-template-columns: repeat(8, 1fr); }
+    .canvas-wrapper {
+        flex-grow: 1;
+        min-height: 45vh;
+    }
+}
